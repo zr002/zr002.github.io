@@ -45,154 +45,126 @@
         format: canvasFormat,
       });
 
-      // Vertices for triangle fishes swimming left or right
       const triangleVertices = new Float32Array([
-        // Fish 1 Body (Small, Swimming Right)
         -0.5, 0.5, 0.0,
         -0.6, 0.45, 0.0,
         -0.6, 0.55, 0.0,
 
-        // Fish 2 Body (Medium, Swimming Left)
         0.3, -0.2, 0.0,
         0.5, -0.3, 0.0,
         0.5, -0.1, 0.0,
 
-        // Fish 3 Body (Large, Swimming Right)
         -0.2, 0.0, 0.0,
         -0.5, -0.15, 0.0,
         -0.5, 0.15, 0.0,
 
-        // Fish 4 Body (Small-Medium, Swimming Right)
         0.4, 0.3, 0.0,
         0.25, 0.25, 0.0,
         0.25, 0.35, 0.0,
 
-        // Fish 5 Body (Tiny, Swimming Left)
         -0.6, -0.4, 0.0,
         -0.65, -0.42, 0.0,
         -0.65, -0.38, 0.0,
 
-        // Fish 6 Body (Small, Swimming Right)
         -0.3, 0.7, 0.0,
         -0.4, 0.65, 0.0,
         -0.4, 0.75, 0.0,
 
-        // Fish 7 Body (Large, Swimming Left)
         0.2, -0.6, 0.0,
         0.4, -0.7, 0.0,
         0.4, -0.5, 0.0,
 
-        // Fish 8 Body (Medium, Swimming Right)
         -0.7, -0.1, 0.0,
         -0.9, -0.2, 0.0,
         -0.9, 0.0, 0.0,
       ]);
 
-      // Vertices for triangle fish tails
       const tailVertices = new Float32Array([
-        // Fish 1 Tail (Small, Swimming Right)
         -0.6, 0.5, 0.0,
         -0.65, 0.46, 0.0,
         -0.65, 0.54, 0.0,
 
-        // Fish 2 Tail (Medium, Swimming Left)
         0.5, -0.2, 0.0,
         0.55, -0.25, 0.0,
         0.55, -0.15, 0.0,
 
-        // Fish 3 Tail (Large, Swimming Right)
         -0.5, 0.0, 0.0,
         -0.55, -0.05, 0.0,
         -0.55, 0.05, 0.0,
 
-        // Fish 4 Tail (Small-Medium, Swimming Right)
         0.25, 0.3, 0.0,
         0.2, 0.26, 0.0,
         0.2, 0.34, 0.0,
 
-        // Fish 5 Tail (Tiny, Swimming Left)
         -0.65, -0.4, 0.0,
         -0.68, -0.43, 0.0,
         -0.68, -0.37, 0.0,
 
-        // Fish 6 Tail (Small, Swimming Right)
         -0.4, 0.7, 0.0,
         -0.45, 0.66, 0.0,
         -0.45, 0.74, 0.0,
 
-        // Fish 7 Tail (Large, Swimming Left)
         0.4, -0.6, 0.0,
         0.45, -0.65, 0.0,
         0.45, -0.55, 0.0,
 
-        // Fish 8 Tail (Medium, Swimming Right)
         -0.9, -0.1, 0.0,
         -0.95, -0.15, 0.0,
         -0.95, -0.05, 0.0,
       ]);
       const starVertices = new Float32Array([
-        // Upward-Pointing Triangle (equilateral, scaled, translated)
-        0.7 + 0.0 * 0.7, -0.3 + 0.121, 0.0,    // Top vertex
-        0.7 - 0.105, -0.3 - 0.06, 0.0,        // Bottom-left vertex
-        0.7 + 0.105, -0.3 - 0.06, 0.0,        // Bottom-right vertex
+        0.7 + 0.0 * 0.7, -0.3 + 0.121, 0.0,    
+        0.7 - 0.105, -0.3 - 0.06, 0.0,       
+        0.7 + 0.105, -0.3 - 0.06, 0.0,      
       
-        // Downward-Pointing Triangle (equilateral, scaled, translated)
-        0.7 + 0.0 * 0.7, -0.3 - 0.221, 0.0,   // Bottom vertex
-        0.7 - 0.105, -0.3 + 0.06, 0.0,        // Top-left vertex
-        0.7 + 0.105, -0.3 + 0.06, 0.0,        // Top-right vertex
+        0.7 + 0.0 * 0.7, -0.3 - 0.221, 0.0,   
+        0.7 - 0.105, -0.3 + 0.06, 0.0,       
+        0.7 + 0.105, -0.3 + 0.06, 0.0,        
       ]);
 
 
       const seaweedVertices = new Float32Array([
-        // Seaweed 1
-        -0.9, -1.0, 0.0,  // Bottom-left
-        -0.9, -0.85, 0.0, // Top-left
-        -0.88, -0.85, 0.0, // Top-right
-        -0.9, -1.0, 0.0,  // Bottom-left
-        -0.88, -0.85, 0.0, // Top-right
-        -0.88, -1.0, 0.0,  // Bottom-right
+        -0.9, -1.0, 0.0,  
+        -0.9, -0.85, 0.0, 
+        -0.88, -0.85, 0.0, 
+        -0.9, -1.0, 0.0,  
+        -0.88, -0.85, 0.0, 
+        -0.88, -1.0, 0.0, 
       
-        // Seaweed 2
-        -0.7, -1.0, 0.0,  // Bottom-left
-        -0.7, -0.85, 0.0, // Top-left
-        -0.68, -0.85, 0.0, // Top-right
-        -0.7, -1.0, 0.0,  // Bottom-left
-        -0.68, -0.85, 0.0, // Top-right
-        -0.68, -1.0, 0.0,  // Bottom-right
+        -0.7, -1.0, 0.0,  
+        -0.7, -0.85, 0.0, 
+        -0.68, -0.85, 0.0, 
+        -0.7, -1.0, 0.0,  
+        -0.68, -0.85, 0.0, 
+        -0.68, -1.0, 0.0,  
       
-        // Seaweed 3
-        -0.5, -1.0, 0.0,  // Bottom-left
-        -0.5, -0.85, 0.0, // Top-left
-        -0.48, -0.85, 0.0, // Top-right
-        -0.5, -1.0, 0.0,  // Bottom-left
-        -0.48, -0.85, 0.0, // Top-right
-        -0.48, -1.0, 0.0,  // Bottom-right
+        -0.5, -1.0, 0.0,  
+        -0.5, -0.85, 0.0, 
+        -0.48, -0.85, 0.0, 
+        -0.5, -1.0, 0.0,  
+        -0.48, -0.85, 0.0, 
+        -0.48, -1.0, 0.0,  
+
+        -0.3, -1.0, 0.0,  
+        -0.3, -0.85, 0.0, 
+        -0.28, -0.85, 0.0, 
+        -0.3, -1.0, 0.0,  
+        -0.28, -0.85, 0.0, 
+        -0.28, -1.0, 0.0, 
       
-        // Seaweed 4
-        -0.3, -1.0, 0.0,  // Bottom-left
-        -0.3, -0.85, 0.0, // Top-left
-        -0.28, -0.85, 0.0, // Top-right
-        -0.3, -1.0, 0.0,  // Bottom-left
-        -0.28, -0.85, 0.0, // Top-right
-        -0.28, -1.0, 0.0,  // Bottom-right
-      
-        // Seaweed 5
-        -0.1, -1.0, 0.0,  // Bottom-left
-        -0.1, -0.95, 0.0, // Top-left
-        -0.08, -0.95, 0.0, // Top-right
-        -0.1, -1.0, 0.0,  // Bottom-left
-        -0.08, -0.95, 0.0, // Top-right
-        -0.08, -1.0, 0.0,  // Bottom-right
+        -0.1, -1.0, 0.0,  
+        -0.1, -0.95, 0.0, 
+        -0.08, -0.95, 0.0, 
+        -0.1, -1.0, 0.0, 
+        -0.08, -0.95, 0.0, 
+        -0.08, -1.0, 0.0, 
       ]);
       
 
 
 
 
-
-      // Vertices for smaller dark blue rectangles (strips)
       const rectangleVertices = new Float32Array([
-        // Rectangle 1
         -0.7, 0.8, 0.0,
         -0.7, 0.75, 0.0,
         -0.5, 0.75, 0.0,
@@ -200,7 +172,6 @@
         -0.5, 0.75, 0.0,
         -0.5, 0.8, 0.0,
 
-        // Rectangle 2
         0.1, 0.5, 0.0,
         0.1, 0.45, 0.0,
         0.3, 0.45, 0.0,
@@ -208,7 +179,6 @@
         0.3, 0.45, 0.0,
         0.3, 0.5, 0.0,
 
-        // Rectangle 3
         -0.4, -0.5, 0.0,
         -0.4, -0.55, 0.0,
         -0.2, -0.55, 0.0,
@@ -216,7 +186,6 @@
         -0.2, -0.55, 0.0,
         -0.2, -0.5, 0.0,
 
-        // Rectangle 4
         -0.2, -0.2, 0.0,
         -0.2, -0.25, 0.0,
         0.0, -0.25, 0.0,
@@ -225,7 +194,6 @@
         0.0, -0.2, 0.0,
       ]);
 
-      // Create buffers for triangles, tails, rectangles, and stars
       const triangleBuffer = device.createBuffer({
         size: triangleVertices.byteLength,
         usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
@@ -250,7 +218,6 @@
       });
       device.queue.writeBuffer(starBuffer, 0, starVertices);
 
-      // Shader for yellow triangles (fishes and tails)
       const triangleShaderModule = device.createShaderModule({
         code: `
           @vertex
@@ -265,7 +232,6 @@
         `,
       });
 
-      // Shader for orange starfish
       const starShaderModule = device.createShaderModule({
         code: `
           @vertex
@@ -280,7 +246,6 @@
         `,
       });
 
-      // Shader for dark blue rectangles (strips)
       const rectangleShaderModule = device.createShaderModule({
         code: `
           @vertex
@@ -295,7 +260,6 @@
         `,
       });
 
-      // Pipelines for triangles, rectangles, and stars
       const trianglePipeline = device.createRenderPipeline({
         layout: 'auto',
         vertex: {
@@ -425,32 +389,27 @@
       const passEncoder = commandEncoder.beginRenderPass({
         colorAttachments: [{
           view: context.getCurrentTexture().createView(),
-          clearValue: { r: 0.51, g: 0.83, b: 0.98, a: 1 }, // Light blue background
+          clearValue: { r: 0.51, g: 0.83, b: 0.98, a: 1 }, 
           loadOp: 'clear',
           storeOp: 'store',
         }],
       });
 
-      // Draw triangle fishes
       passEncoder.setPipeline(trianglePipeline);
       passEncoder.setVertexBuffer(0, triangleBuffer);
       passEncoder.draw(triangleVertices.length / 3);
 
-      // Draw triangle tails
       passEncoder.setVertexBuffer(0, tailBuffer);
       passEncoder.draw(tailVertices.length / 3);
 
-      // Draw dark blue rectangles
       passEncoder.setPipeline(rectanglePipeline);
       passEncoder.setVertexBuffer(0, rectangleBuffer);
       passEncoder.draw(rectangleVertices.length / 3);
 
-      // Draw one orange starfish
       passEncoder.setPipeline(starPipeline);
       passEncoder.setVertexBuffer(0, starBuffer);
       passEncoder.draw(starVertices.length / 3);
 
-            // Draw green seaweed
       passEncoder.setPipeline(seaweedPipeline);
       passEncoder.setVertexBuffer(0, seaweedBuffer);
       passEncoder.draw(seaweedVertices.length / 3);
