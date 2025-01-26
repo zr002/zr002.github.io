@@ -23,7 +23,7 @@
 </head>
 <body>
   <h1>Welcome to My Arcane Portal!</h1>
-  <h2>Static Shape Rendering: Fishes with Tails</h2>
+  <h2>Static Shape Rendering: Fishes with Attached Tails</h2>
   <canvas id="webgpu-canvas" width="800" height="400"></canvas>
 
   <script type="module">
@@ -91,47 +91,82 @@
       // Vertices for triangle fish tails
       const tailVertices = new Float32Array([
         // Fish 1 Tail (Small, Swimming Right)
-        -0.65, 0.5, 0.0,
-        -0.7, 0.46, 0.0,
-        -0.7, 0.54, 0.0,
+        -0.6, 0.5, 0.0,
+        -0.65, 0.46, 0.0,
+        -0.65, 0.54, 0.0,
 
         // Fish 2 Tail (Medium, Swimming Left)
-        0.55, -0.2, 0.0,
-        0.6, -0.25, 0.0,
-        0.6, -0.15, 0.0,
+        0.5, -0.2, 0.0,
+        0.55, -0.25, 0.0,
+        0.55, -0.15, 0.0,
 
         // Fish 3 Tail (Large, Swimming Right)
-        -0.55, 0.0, 0.0,
-        -0.6, -0.05, 0.0,
-        -0.6, 0.05, 0.0,
+        -0.5, 0.0, 0.0,
+        -0.55, -0.05, 0.0,
+        -0.55, 0.05, 0.0,
 
         // Fish 4 Tail (Small-Medium, Swimming Right)
-        0.2, 0.3, 0.0,
-        0.15, 0.26, 0.0,
-        0.15, 0.34, 0.0,
+        0.25, 0.3, 0.0,
+        0.2, 0.26, 0.0,
+        0.2, 0.34, 0.0,
 
         // Fish 5 Tail (Tiny, Swimming Left)
-        -0.7, -0.4, 0.0,
-        -0.72, -0.43, 0.0,
-        -0.72, -0.37, 0.0,
+        -0.65, -0.4, 0.0,
+        -0.68, -0.43, 0.0,
+        -0.68, -0.37, 0.0,
 
         // Fish 6 Tail (Small, Swimming Right)
-        -0.45, 0.7, 0.0,
-        -0.5, 0.66, 0.0,
-        -0.5, 0.74, 0.0,
+        -0.4, 0.7, 0.0,
+        -0.45, 0.66, 0.0,
+        -0.45, 0.74, 0.0,
 
         // Fish 7 Tail (Large, Swimming Left)
-        0.45, -0.6, 0.0,
-        0.5, -0.65, 0.0,
-        0.5, -0.55, 0.0,
+        0.4, -0.6, 0.0,
+        0.45, -0.65, 0.0,
+        0.45, -0.55, 0.0,
 
         // Fish 8 Tail (Medium, Swimming Right)
-        -0.95, -0.1, 0.0,
-        -1.0, -0.15, 0.0,
-        -1.0, -0.05, 0.0,
+        -0.9, -0.1, 0.0,
+        -0.95, -0.15, 0.0,
+        -0.95, -0.05, 0.0,
       ]);
 
-      // Create buffers for triangles and tails
+      // Vertices for smaller dark blue rectangles (strips)
+      const rectangleVertices = new Float32Array([
+        // Rectangle 1
+        -0.7, 0.8, 0.0,
+        -0.7, 0.75, 0.0,
+        -0.5, 0.75, 0.0,
+        -0.7, 0.8, 0.0,
+        -0.5, 0.75, 0.0,
+        -0.5, 0.8, 0.0,
+
+        // Rectangle 2
+        0.1, 0.5, 0.0,
+        0.1, 0.45, 0.0,
+        0.3, 0.45, 0.0,
+        0.1, 0.5, 0.0,
+        0.3, 0.45, 0.0,
+        0.3, 0.5, 0.0,
+
+        // Rectangle 3
+        -0.4, -0.5, 0.0,
+        -0.4, -0.55, 0.0,
+        -0.2, -0.55, 0.0,
+        -0.4, -0.5, 0.0,
+        -0.2, -0.55, 0.0,
+        -0.2, -0.5, 0.0,
+
+        // Rectangle 4
+        -0.2, -0.2, 0.0,
+        -0.2, -0.25, 0.0,
+        0.0, -0.25, 0.0,
+        -0.2, -0.2, 0.0,
+        0.0, -0.25, 0.0,
+        0.0, -0.2, 0.0,
+      ]);
+
+      // Create buffers for triangles, tails, and rectangles
       const triangleBuffer = device.createBuffer({
         size: triangleVertices.byteLength,
         usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
@@ -143,6 +178,12 @@
         usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
       });
       device.queue.writeBuffer(tailBuffer, 0, tailVertices);
+
+      const rectangleBuffer = device.createBuffer({
+        size: rectangleVertices.byteLength,
+        usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
+      });
+      device.queue.writeBuffer(rectangleBuffer, 0, rectangleVertices);
 
       // Shader for yellow triangles (fishes and tails)
       const shaderModule = device.createShaderModule({
@@ -159,8 +200,23 @@
         `,
       });
 
-      // Pipeline for fishes and tails
-      const pipeline = device.createRenderPipeline({
+      // Shader for dark blue rectangles (strips)
+      const rectangleShaderModule = device.createShaderModule({
+        code: `
+          @vertex
+          fn vertexMain(@location(0) position: vec3f) -> @builtin(position) vec4f {
+            return vec4f(position, 1.0);
+          }
+
+          @fragment
+          fn fragmentMain() -> @location(0) vec4f {
+            return vec4f(0.0, 0.0, 0.5, 1.0); // Dark blue color for rectangles
+          }
+        `,
+      });
+
+      // Pipelines for triangles and rectangles
+      const trianglePipeline = device.createRenderPipeline({
         layout: 'auto',
         vertex: {
           module: shaderModule,
@@ -186,6 +242,32 @@
         },
       });
 
+      const rectanglePipeline = device.createRenderPipeline({
+        layout: 'auto',
+        vertex: {
+          module: rectangleShaderModule,
+          entryPoint: 'vertexMain',
+          buffers: [{
+            arrayStride: 3 * Float32Array.BYTES_PER_ELEMENT,
+            attributes: [{
+              shaderLocation: 0,
+              offset: 0,
+              format: 'float32x3',
+            }],
+          }],
+        },
+        fragment: {
+          module: rectangleShaderModule,
+          entryPoint: 'fragmentMain',
+          targets: [{
+            format: canvasFormat,
+          }],
+        },
+        primitive: {
+          topology: 'triangle-list',
+        },
+      });
+
       const commandEncoder = device.createCommandEncoder();
 
       const passEncoder = commandEncoder.beginRenderPass({
@@ -198,13 +280,18 @@
       });
 
       // Draw triangle fishes
-      passEncoder.setPipeline(pipeline);
+      passEncoder.setPipeline(trianglePipeline);
       passEncoder.setVertexBuffer(0, triangleBuffer);
       passEncoder.draw(triangleVertices.length / 3);
 
       // Draw triangle tails
       passEncoder.setVertexBuffer(0, tailBuffer);
       passEncoder.draw(tailVertices.length / 3);
+
+      // Draw dark blue rectangles
+      passEncoder.setPipeline(rectanglePipeline);
+      passEncoder.setVertexBuffer(0, rectangleBuffer);
+      passEncoder.draw(rectangleVertices.length / 3);
 
       passEncoder.end();
 
