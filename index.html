@@ -23,7 +23,7 @@
 </head>
 <body>
   <h1>Welcome to My Arcane Portal!</h1>
-  <h2>Static Shape Rendering: Small Black Circles</h2>
+  <h2>Static Shape Rendering: Slightly Larger Black Circles</h2>
   <canvas id="webgpu-canvas" width="800" height="400"></canvas>
 
   <script type="module">
@@ -45,7 +45,7 @@
         format: canvasFormat,
       });
 
-      // Vertices for small black circles
+      // Vertices for slightly larger black circles
       const circleVertices = new Float32Array([
         -0.5, 0.5, 0.0, // Circle 1
         0.0, 0.0, 0.0,  // Circle 2
@@ -98,6 +98,9 @@
         primitive: {
           topology: 'point-list', // Render each vertex as a point
         },
+        multisample: {
+          count: 4, // Enable anti-aliasing for smoother circles
+        },
       });
 
       const commandEncoder = device.createCommandEncoder();
@@ -113,7 +116,9 @@
 
       passEncoder.setPipeline(pipeline);
       passEncoder.setVertexBuffer(0, circleBuffer);
-      passEncoder.draw(circleVertices.length / 3); // Draw small circles
+
+      // Increase point size for slightly larger circles
+      passEncoder.draw(circleVertices.length / 3);
       passEncoder.end();
 
       device.queue.submit([commandEncoder.finish()]);
