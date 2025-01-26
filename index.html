@@ -130,17 +130,18 @@
         -0.95, -0.15, 0.0,
         -0.95, -0.05, 0.0,
       ]);
-      const starVertices = new Float32Array([
-        // First Triangle (upward-pointing)
-        0.0, 0.75, 0.0,   // Top vertex
-        -0.15, 0.5, 0.0,  // Bottom-left vertex
-        0.15, 0.5, 0.0,   // Bottom-right vertex
-      
-        // Second Triangle (downward-pointing)
-        0.0, 0.25, 0.0,   // Bottom vertex
-        -0.15, 0.5, 0.0,  // Top-left vertex
-        0.15, 0.5, 0.0,   // Top-right vertex
-      ]);
+    const starVertices = new Float32Array([
+      // First Triangle (upward-pointing)
+      0.0, 0.75, 0.0,   // Top vertex
+      -0.15, 0.5, 0.0,  // Bottom-left vertex
+      0.15, 0.5, 0.0,   // Bottom-right vertex
+    
+      // Second Triangle (downward-pointing, shifted upward)
+      0.0, 0.55, 0.0,   // Bottom vertex (shifted upward)
+      -0.15, 0.65, 0.0, // Top-left vertex
+      0.15, 0.65, 0.0,  // Top-right vertex
+    ]);
+
 
 
 
