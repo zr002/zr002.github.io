@@ -1,20 +1,76 @@
 <!DOCTYPE html>
 <html>
-<meta>
-  <link rel="stylesheet" type="text/css" href="style.css">
-</meta>
 <head>
   <title>SP 25 Apprentice Aiden Ren's Arcane Portal</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #e0f7fa; /* Light ocean blue background for the entire page */
+    }
+    h1 {
+      color: #01579b; /* Dark blue heading */
+    }
+    h2 {
+      color: #0288d1; /* Bright blue subheading */
+    }
+    #ocean {
+      position: relative;
+      margin: 20px auto;
+      width: 80%;
+      height: 400px;
+      background-color: #81d4fa; /* Ocean background */
+      border: 2px solid #0288d1; /* Ocean border */
+      overflow: hidden;
+    }
+    .fish-body {
+      position: absolute;
+      background-color: #4dd0e1; /* Light teal fish body */
+      border-radius: 50%;
+    }
+    .fish-tail {
+      position: absolute;
+      background-color: #4db6ac; /* Dark teal tail */
+      clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+    }
+    .starfish {
+      position: absolute;
+      background-color: #ff7043; /* Coral color for starfish */
+      width: 50px;
+      height: 50px;
+      clip-path: polygon(
+        50% 0%,
+        61% 35%,
+        98% 35%,
+        68% 57%,
+        79% 91%,
+        50% 70%,
+        21% 91%,
+        32% 57%,
+        2% 35%,
+        39% 35%
+      );
+    }
+  </style>
 </head>
 <body>
-  <h1>Welcome!</h1>
-  <p>This page displays my current progress in learning computer graphics.</p>
-  <button onclick="castSpell()">Click to Cast a Spell!</button>
-  <p id="spellResult"></p>
-  <script>
-  function castSpell() {
-         document.getElementById("spellResult").innerText = "Your spell has been cast successfully!";
-  }
-  </script>
+  <h1>Welcome to My Arcane Portal!</h1>
+  <h2>Static Shape Rendering: Swimming Fishes in the Ocean</h2>
+  <div id="ocean">
+    <!-- Rectangle: Ocean -->
+    <!-- Fish 1 -->
+    <div class="fish-body" style="width: 40px; height: 20px; top: 50px; left: 100px;"></div>
+    <div class="fish-tail" style="width: 20px; height: 20px; top: 50px; left: 80px;"></div>
+
+    <!-- Fish 2 -->
+    <div class="fish-body" style="width: 60px; height: 30px; top: 200px; left: 300px;"></div>
+    <div class="fish-tail" style="width: 30px; height: 30px; top: 200px; left: 270px;"></div>
+
+    <!-- Starfish (Complex Shape) -->
+    <div class="starfish" style="top: 150px; left: 500px;"></div>
+  </div>
+
+  <p>This scene represents a vibrant underwater world with fishes and a starfish. The theme symbolizes harmony and movement in the ocean.</p>
 </body>
 </html>
