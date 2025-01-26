@@ -47,37 +47,30 @@
       });
 
       const vertices = new Float32Array([
-        // Fish 1
-        0.2, 0.7,  0.0,  // Body center (circle approximation)
-        0.15, 0.7, -0.05,  // Tail triangle vertices
-        0.25, 0.7, -0.05,
+        // Fish 1 body and tail
+        0.1, 0.6,  0.0,  // Triangle 1 for body
+        0.0, 0.5,  0.0,
+        0.2, 0.5,  0.0,
 
-        // Fish 2
-        -0.3, 0.0,  0.0,
-        -0.35, 0.0, -0.05,
-        -0.25, 0.0, -0.05,
+        0.0, 0.5,  0.0,  // Tail
+        -0.1, 0.45, 0.0,
+        0.0, 0.4,  0.0,
 
-        // Fish 3
-        0.5, 0.3,  0.0,
-        0.45, 0.3, -0.05,
-        0.55, 0.3, -0.05,
+        // Fish 2 body and tail
+        -0.3, -0.1, 0.0,  // Triangle 2 for body
+        -0.4, -0.2, 0.0,
+        -0.2, -0.2, 0.0,
 
-        // Fish 4 (mirrored)
-        -0.75, -0.25,  0.0,
-        -0.80, -0.25, -0.05,
-        -0.70, -0.25, -0.05,
+        -0.4, -0.2, 0.0,  // Tail
+        -0.5, -0.25, 0.0,
+        -0.4, -0.3, 0.0,
 
-        // Fish 5 (mirrored)
-        -1.0, -0.6,  0.0,
-        -1.05, -0.6, -0.05,
-        -0.95, -0.6, -0.05,
-
-        // Starfish (complex shape)
-        -0.1, -0.2, 0.0,
-        0.0, -0.15, 0.0,
-        -0.05, -0.05, 0.0,
-        0.05, -0.05, 0.0,
-        0.1, -0.15, 0.0,
+        // Starfish (Complex Shape)
+        0.0, -0.3, 0.0,
+        0.05, -0.25, 0.0,
+        -0.05, -0.25, 0.0,
+        0.05, -0.35, 0.0,
+        -0.05, -0.35, 0.0,
       ]);
 
       const vertexBuffer = device.createBuffer({
@@ -130,7 +123,7 @@
       const passEncoder = commandEncoder.beginRenderPass({
         colorAttachments: [{
           view: context.getCurrentTexture().createView(),
-          clearValue: { r: 0.81, g: 0.83, b: 0.98, a: 1 },
+          clearValue: { r: 0.81, g: 0.83, b: 0.98, a: 1 }, // Light blue background
           loadOp: 'clear',
           storeOp: 'store',
         }],
@@ -138,7 +131,7 @@
 
       passEncoder.setPipeline(pipeline);
       passEncoder.setVertexBuffer(0, vertexBuffer);
-      passEncoder.draw(vertices.length / 3);
+      passEncoder.draw(vertices.length / 3); // Update draw call for all vertices
       passEncoder.end();
 
       device.queue.submit([commandEncoder.finish()]);
