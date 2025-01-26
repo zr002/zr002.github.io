@@ -23,7 +23,7 @@
 </head>
 <body>
   <h1>Welcome to My Arcane Portal!</h1>
-  <h2>Static Shape Rendering: Swimming Fishes in the Ocean</h2>
+  <h2>Static Shape Rendering: Small Black Circles</h2>
   <canvas id="webgpu-canvas" width="800" height="400"></canvas>
 
   <script type="module">
@@ -45,91 +45,59 @@
         format: canvasFormat,
       });
 
-      // Vertices for fish and eyes
-      const fishVertices = new Float32Array([
-        0.5, 0.3, 0.0, 0.3, 0.2, 0.0, 0.3, 0.4, 0.0, // Fish 1
-        -0.6, -0.5, 0.0, -0.7, -0.6, 0.0, -0.5, -0.6, 0.0, // Fish 2
-        0.0, 0.2, 0.0, -0.2, 0.0, 0.0, 0.2, 0.0, 0.0, // Fish 3
+      // Vertices for small black circles
+      const circleVertices = new Float32Array([
+        -0.5, 0.5, 0.0, // Circle 1
+        0.0, 0.0, 0.0,  // Circle 2
+        0.5, -0.5, 0.0, // Circle 3
+        -0.2, -0.3, 0.0, // Circle 4
+        0.3, 0.4, 0.0,  // Circle 5
       ]);
 
-      const eyeVertices = new Float32Array([
-        0.45, 0.35, 0.0, // Eye for Fish 1
-        -0.65, -0.55, 0.0, // Eye for Fish 2
-        0.05, 0.15, 0.0, // Eye for Fish 3
-      ]);
-
-      const fishBuffer = device.createBuffer({
-        size: fishVertices.byteLength,
+      const circleBuffer = device.createBuffer({
+        size: circleVertices.byteLength,
         usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
       });
-      device.queue.writeBuffer(fishBuffer, 0, fishVertices);
+      device.queue.writeBuffer(circleBuffer, 0, circleVertices);
 
-      const eyeBuffer = device.createBuffer({
-        size: eyeVertices.byteLength,
-        usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
-      });
-      device.queue.writeBuffer(eyeBuffer, 0, eyeVertices);
-
-      const fishShaderModule = device.createShaderModule({
+      const shaderModule = device.createShaderModule({
         code: `
           @vertex
           fn vertexMain(@location(0) position: vec3f) -> @builtin(position) vec4f {
             return vec4f(position, 1.0);
           }
+
           @fragment
           fn fragmentMain() -> @location(0) vec4f {
-            return vec4f(1.0, 1.0, 0.0, 1.0); // Yellow color
+            return vec4f(0.0, 0.0, 0.0, 1.0); // Black color for circles
           }
         `,
       });
 
-      const eyeShaderModule = device.createShaderModule({
-        code: `
-          @vertex
-          fn vertexMain(@location(0) position: vec3f) -> @builtin(position) vec4f {
-            return vec4f(position, 1.0);
-          }
-          @fragment
-          fn fragmentMain() -> @location(0) vec4f {
-            return vec4f(0.0, 0.0, 0.0, 1.0); // Black color
-          }
-        `,
-      });
-
-      const fishPipeline = device.createRenderPipeline({
+      const pipeline = device.createRenderPipeline({
         layout: 'auto',
         vertex: {
-          module: fishShaderModule,
+          module: shaderModule,
           entryPoint: 'vertexMain',
           buffers: [{
             arrayStride: 3 * Float32Array.BYTES_PER_ELEMENT,
-            attributes: [{ shaderLocation: 0, offset: 0, format: 'float32x3' }],
+            attributes: [{
+              shaderLocation: 0,
+              offset: 0,
+              format: 'float32x3',
+            }],
           }],
         },
         fragment: {
-          module: fishShaderModule,
+          module: shaderModule,
           entryPoint: 'fragmentMain',
-          targets: [{ format: canvasFormat }],
-        },
-        primitive: { topology: 'triangle-list' },
-      });
-
-      const eyePipeline = device.createRenderPipeline({
-        layout: 'auto',
-        vertex: {
-          module: eyeShaderModule,
-          entryPoint: 'vertexMain',
-          buffers: [{
-            arrayStride: 3 * Float32Array.BYTES_PER_ELEMENT,
-            attributes: [{ shaderLocation: 0, offset: 0, format: 'float32x3' }],
+          targets: [{
+            format: canvasFormat,
           }],
         },
-        fragment: {
-          module: eyeShaderModule,
-          entryPoint: 'fragmentMain',
-          targets: [{ format: canvasFormat }],
+        primitive: {
+          topology: 'point-list', // Render each vertex as a point
         },
-        primitive: { topology: 'point-list' },
       });
 
       const commandEncoder = device.createCommandEncoder();
@@ -137,20 +105,15 @@
       const passEncoder = commandEncoder.beginRenderPass({
         colorAttachments: [{
           view: context.getCurrentTexture().createView(),
-          clearValue: { r: 0.51, g: 0.83, b: 0.98, a: 1 }, // Ocean color
+          clearValue: { r: 0.51, g: 0.83, b: 0.98, a: 1 }, // Light blue background
           loadOp: 'clear',
           storeOp: 'store',
         }],
       });
 
-      passEncoder.setPipeline(fishPipeline);
-      passEncoder.setVertexBuffer(0, fishBuffer);
-      passEncoder.draw(fishVertices.length / 3);
-
-      passEncoder.setPipeline(eyePipeline);
-      passEncoder.setVertexBuffer(0, eyeBuffer);
-      passEncoder.draw(eyeVertices.length);
-
+      passEncoder.setPipeline(pipeline);
+      passEncoder.setVertexBuffer(0, circleBuffer);
+      passEncoder.draw(circleVertices.length / 3); // Draw small circles
       passEncoder.end();
 
       device.queue.submit([commandEncoder.finish()]);
