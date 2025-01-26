@@ -46,27 +46,30 @@
       });
 
       const vertices = new Float32Array([
-        // Fish 1 (rotated 90 degrees, top-right corner)
+        // Fish 1 (top-right corner)
         0.5, 0.3, 0.0,  // Top vertex
         0.3, 0.2, 0.0,  // Bottom-left vertex
         0.3, 0.4, 0.0,  // Bottom-right vertex
 
-        // Fish 2 (smaller, bottom-left corner)
+        // Fish 2 (bottom-left corner)
         -0.6, -0.5, 0.0,  // Top vertex
         -0.7, -0.6, 0.0,  // Bottom-left vertex
         -0.5, -0.6, 0.0,  // Bottom-right vertex
 
-        // Fish 3 (larger, centered)
+        // Fish 3 (centered)
         0.0, 0.2, 0.0,  // Top vertex
         -0.2, 0.0, 0.0,  // Bottom-left vertex
-        0.2, 0.0, 0.0,  // Bottom-right vertex
+        0.2, 0.0, 0.0,  // Bottom-right vertex,
 
-        // Starfish (complex shape, bottom-right corner)
-        0.7, -0.3, 0.0,
-        0.8, -0.2, 0.0,
-        0.6, -0.2, 0.0,
-        0.75, -0.1, 0.0,
-        0.65, -0.1, 0.0,
+        // Fish 4 (top-left corner)
+        -0.4, 0.6, 0.0,  // Top vertex
+        -0.5, 0.5, 0.0,  // Bottom-left vertex
+        -0.3, 0.5, 0.0,  // Bottom-right vertex,
+
+        // Fish 5 (bottom-right corner)
+        0.6, -0.4, 0.0,  // Top vertex
+        0.5, -0.6, 0.0,  // Bottom-left vertex
+        0.7, -0.6, 0.0,  // Bottom-right vertex
       ]);
 
       const vertexBuffer = device.createBuffer({
@@ -83,11 +86,8 @@
           }
 
           @fragment
-          fn fragmentMain(@builtin(position) fragCoord: vec4f) -> @location(0) vec4f {
-            if (fragCoord.x > 0.7) { // Color starfish
-              return vec4f(1.0, 0.5, 0.0, 1.0); // Orange
-            }
-            return vec4f(1.0, 1.0, 0.0, 1.0); // Yellow color for fish
+          fn fragmentMain() -> @location(0) vec4f {
+            return vec4f(1.0, 1.0, 0.0, 1.0); // Yellow color for the fish
           }
         `,
       });
@@ -130,7 +130,7 @@
 
       passEncoder.setPipeline(pipeline);
       passEncoder.setVertexBuffer(0, vertexBuffer);
-      passEncoder.draw(vertices.length / 3); // Draw the fish and starfish
+      passEncoder.draw(vertices.length / 3); // Draw the fish
       passEncoder.end();
 
       device.queue.submit([commandEncoder.finish()]);
