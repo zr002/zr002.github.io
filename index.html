@@ -15,70 +15,136 @@
     h2 {
       color: #615F74; 
     }
-    #ocean {
-      position: relative;
+    canvas {
+      display: block;
       margin: 20px auto;
-      width: 80%;
-      height: 400px;
-      background-color: #81d4fa;
-      overflow: hidden;
-    }
-    .fish-body {
-      position: absolute;
-      background-color: #4dd0e1; 
-      border-radius: 50%;
-    }
-    .fish-tail {
-      position: absolute;
-      background-color: #4db6ac; 
-      clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
-    }
-    .starfish {
-      position: absolute;
-      background-color: #ff7043; 
-      width: 50px;
-      height: 50px;
-      clip-path: polygon(
-        50% 0%,
-        61% 35%,
-        98% 35%,
-        68% 57%,
-        79% 91%,
-        50% 70%,
-        21% 91%,
-        32% 57%,
-        2% 35%,
-        39% 35%
-      );
+      border: 2px solid #615F74;
     }
   </style>
 </head>
 <body>
   <h1>Welcome to My Arcane Portal!</h1>
   <h2>Static Shape Rendering: Swimming Fishes in the Ocean</h2>
-  <div id="ocean">
-    <!-- Fish 1 -->
-    <div class="fish-body" style="width: 40px; height: 20px; top: 50px; left: 100px;"></div>
-    <div class="fish-tail" style="width: 20px; height: 20px; top: 50px; left: 80px;"></div>
+  <canvas id="webgpu-canvas" width="800" height="400"></canvas>
 
-    <!-- Fish 2 -->
-    <div class="fish-body" style="width: 60px; height: 30px; top: 200px; left: 300px;"></div>
-    <div class="fish-tail" style="width: 30px; height: 30px; top: 200px; left: 270px;"></div>
+  <script type="module">
+    async function initWebGPU() {
+      const canvas = document.getElementById('webgpu-canvas');
+      const context = canvas.getContext('webgpu');
 
-    <!-- Fish 3 -->
-    <div class="fish-body" style="width: 50px; height: 25px; top: 100px; left: 400px;"></div>
-    <div class="fish-tail" style="width: 25px; height: 25px; top: 100px; left: 375px;"></div>
+      if (!navigator.gpu) {
+        alert('WebGPU is not supported in this browser.');
+        return;
+      }
 
-    <!-- Fish 4 -->
-    <div class="fish-body" style="width: 45px; height: 22px; top: 250px; left: 750px; transform: scaleX(-1);"></div>
-    <div class="fish-tail" style="width: 22px; height: 22px; top: 250px; left: 795px; transform: scaleX(-1);"></div>
+      const adapter = await navigator.gpu.requestAdapter();
+      const device = await adapter.requestDevice();
+      const canvasFormat = navigator.gpu.getPreferredCanvasFormat();
 
-    <!-- Fish 5 -->
-    <div class="fish-body" style="width: 35px; height: 18px; top: 300px; left: 1000px; transform: scaleX(-1);"></div>
-    <div class="fish-tail" style="width: 18px; height: 18px; top: 300px; left: 1035px; transform: scaleX(-1);"></div>
+      context.configure({
+        device: device,
+        format: canvasFormat,
+      });
 
-    <!-- Starfish (Complex Shape) -->
-    <div class="starfish" style="top: 150px; left: 500px;"></div>
-  </div>
+      const vertices = new Float32Array([
+        // Fish 1
+        0.2, 0.7,  0.0,  // Body center (circle approximation)
+        0.15, 0.7, -0.05,  // Tail triangle vertices
+        0.25, 0.7, -0.05,
+
+        // Fish 2
+        -0.3, 0.0,  0.0,
+        -0.35, 0.0, -0.05,
+        -0.25, 0.0, -0.05,
+
+        // Fish 3
+        0.5, 0.3,  0.0,
+        0.45, 0.3, -0.05,
+        0.55, 0.3, -0.05,
+
+        // Fish 4 (mirrored)
+        -0.75, -0.25,  0.0,
+        -0.80, -0.25, -0.05,
+        -0.70, -0.25, -0.05,
+
+        // Fish 5 (mirrored)
+        -1.0, -0.6,  0.0,
+        -1.05, -0.6, -0.05,
+        -0.95, -0.6, -0.05,
+
+        // Starfish (complex shape)
+        -0.1, -0.2, 0.0,
+        0.0, -0.15, 0.0,
+        -0.05, -0.05, 0.0,
+        0.05, -0.05, 0.0,
+        0.1, -0.15, 0.0,
+      ]);
+
+      const vertexBuffer = device.createBuffer({
+        size: vertices.byteLength,
+        usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
+      });
+      device.queue.writeBuffer(vertexBuffer, 0, vertices);
+
+      const shaderModule = device.createShaderModule({
+        code: `
+          @vertex
+          fn vertexMain(@location(0) position: vec3f) -> @builtin(position) vec4f {
+            return vec4f(position, 1.0);
+          }
+
+          @fragment
+          fn fragmentMain() -> @location(0) vec4f {
+            return vec4f(0.4, 0.8, 0.6, 1.0); // Greenish color for all shapes
+          }
+        `,
+      });
+
+      const pipeline = device.createRenderPipeline({
+        layout: 'auto',
+        vertex: {
+          module: shaderModule,
+          entryPoint: 'vertexMain',
+          buffers: [{
+            arrayStride: 3 * Float32Array.BYTES_PER_ELEMENT,
+            attributes: [{
+              shaderLocation: 0,
+              offset: 0,
+              format: 'float32x3',
+            }],
+          }],
+        },
+        fragment: {
+          module: shaderModule,
+          entryPoint: 'fragmentMain',
+          targets: [{
+            format: canvasFormat,
+          }],
+        },
+        primitive: {
+          topology: 'triangle-list',
+        },
+      });
+
+      const commandEncoder = device.createCommandEncoder();
+      const passEncoder = commandEncoder.beginRenderPass({
+        colorAttachments: [{
+          view: context.getCurrentTexture().createView(),
+          clearValue: { r: 0.81, g: 0.83, b: 0.98, a: 1 },
+          loadOp: 'clear',
+          storeOp: 'store',
+        }],
+      });
+
+      passEncoder.setPipeline(pipeline);
+      passEncoder.setVertexBuffer(0, vertexBuffer);
+      passEncoder.draw(vertices.length / 3);
+      passEncoder.end();
+
+      device.queue.submit([commandEncoder.finish()]);
+    }
+
+    initWebGPU();
+  </script>
 </body>
 </html>
