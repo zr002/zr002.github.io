@@ -23,7 +23,7 @@
 </head>
 <body>
   <h1>Welcome to My Arcane Portal!</h1>
-  <h2>Static Shape Rendering: Slightly Larger Black Circles</h2>
+  <h2>Static Shape Rendering: Squares Instead of Circles</h2>
   <canvas id="webgpu-canvas" width="800" height="400"></canvas>
 
   <script type="module">
@@ -45,20 +45,38 @@
         format: canvasFormat,
       });
 
-      // Vertices for slightly larger black circles
-      const circleVertices = new Float32Array([
-        -0.5, 0.5, 0.0, // Circle 1
-        0.0, 0.0, 0.0,  // Circle 2
-        0.5, -0.5, 0.0, // Circle 3
-        -0.2, -0.3, 0.0, // Circle 4
-        0.3, 0.4, 0.0,  // Circle 5
+      // Vertices for black squares (two triangles per square)
+      const squareVertices = new Float32Array([
+        // Square 1 (top-left)
+        -0.6, 0.6, 0.0, // Top-left triangle
+        -0.7, 0.5, 0.0,
+        -0.6, 0.5, 0.0,
+        -0.6, 0.6, 0.0, // Bottom-right triangle
+        -0.7, 0.5, 0.0,
+        -0.7, 0.6, 0.0,
+
+        // Square 2 (center)
+        -0.1, 0.1, 0.0, // Top-left triangle
+        -0.2, 0.0, 0.0,
+        -0.1, 0.0, 0.0,
+        -0.1, 0.1, 0.0, // Bottom-right triangle
+        -0.2, 0.0, 0.0,
+        -0.2, 0.1, 0.0,
+
+        // Square 3 (bottom-right)
+        0.6, -0.4, 0.0, // Top-left triangle
+        0.5, -0.5, 0.0,
+        0.6, -0.5, 0.0,
+        0.6, -0.4, 0.0, // Bottom-right triangle
+        0.5, -0.5, 0.0,
+        0.5, -0.4, 0.0,
       ]);
 
-      const circleBuffer = device.createBuffer({
-        size: circleVertices.byteLength,
+      const squareBuffer = device.createBuffer({
+        size: squareVertices.byteLength,
         usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
       });
-      device.queue.writeBuffer(circleBuffer, 0, circleVertices);
+      device.queue.writeBuffer(squareBuffer, 0, squareVertices);
 
       const shaderModule = device.createShaderModule({
         code: `
@@ -69,7 +87,7 @@
 
           @fragment
           fn fragmentMain() -> @location(0) vec4f {
-            return vec4f(0.0, 0.0, 0.0, 1.0); // Black color for circles
+            return vec4f(0.0, 0.0, 0.0, 1.0); // Black color for squares
           }
         `,
       });
@@ -96,10 +114,7 @@
           }],
         },
         primitive: {
-          topology: 'point-list', // Render each vertex as a point
-        },
-        multisample: {
-          count: 4, // Enable anti-aliasing for smoother circles
+          topology: 'triangle-list', // Render each square as two triangles
         },
       });
 
@@ -115,10 +130,8 @@
       });
 
       passEncoder.setPipeline(pipeline);
-      passEncoder.setVertexBuffer(0, circleBuffer);
-
-      // Increase point size for slightly larger circles
-      passEncoder.draw(circleVertices.length / 3);
+      passEncoder.setVertexBuffer(0, squareBuffer);
+      passEncoder.draw(squareVertices.length / 3); // Draw the squares
       passEncoder.end();
 
       device.queue.submit([commandEncoder.finish()]);
