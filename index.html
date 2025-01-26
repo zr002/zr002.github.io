@@ -136,11 +136,12 @@
       -0.15, 0.5, 0.0,  // Bottom-left vertex
       0.15, 0.5, 0.0,   // Bottom-right vertex
     
-      // Second Triangle (downward-pointing, shifted upward)
-      0.0, 0.55, 0.0,   // Bottom vertex (shifted upward)
-      -0.15, 0.65, 0.0, // Top-left vertex
-      0.15, 0.65, 0.0,  // Top-right vertex
+      // Second Triangle (downward-pointing, mirrored along y = 0.48)
+      0.0, 0.21, 0.0,   // Bottom vertex (mirrored from top vertex)
+      -0.15, 0.46, 0.0, // Top-left vertex (mirrored from bottom-left)
+      0.15, 0.46, 0.0,  // Top-right vertex (mirrored from bottom-right)
     ]);
+
 
 
 
