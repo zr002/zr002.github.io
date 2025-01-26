@@ -46,15 +46,10 @@
       });
 
       const vertices = new Float32Array([
-        // Fish body
-        0.2, 0.7,  0.0,  // Top of body
-        0.15, 0.6, 0.0,
-        0.25, 0.6, 0.0,
-
-        // Fish tail
-        0.15, 0.6, 0.0,
-        0.1, 0.55, 0.0,
-        0.2, 0.6, 0.0,
+        // Triangle fish (single triangle per fish)
+        0.0, 0.5, 0.0,  // Top vertex of the triangle
+        -0.1, 0.3, 0.0, // Bottom-left vertex
+        0.1, 0.3, 0.0,  // Bottom-right vertex
       ]);
 
       const vertexBuffer = device.createBuffer({
@@ -72,7 +67,7 @@
 
           @fragment
           fn fragmentMain() -> @location(0) vec4f {
-            return vec4f(0.4, 0.8, 0.6, 1.0); // Greenish color for the fish
+            return vec4f(1.0, 1.0, 0.0, 1.0); // Yellow color for the fish
           }
         `,
       });
@@ -115,7 +110,7 @@
 
       passEncoder.setPipeline(pipeline);
       passEncoder.setVertexBuffer(0, vertexBuffer);
-      passEncoder.draw(vertices.length / 3); // Draw the fish
+      passEncoder.draw(vertices.length / 3); // Draw the triangle fish
       passEncoder.end();
 
       device.queue.submit([commandEncoder.finish()]);
