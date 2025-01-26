@@ -23,7 +23,7 @@
 </head>
 <body>
   <h1>Welcome to My Arcane Portal!</h1>
-  <h2>Static Shape Rendering: Enhanced Ocean Scene with More Fishes and Strips</h2>
+  <h2>Static Shape Rendering: Enhanced Ocean Scene with Smaller Rectangles</h2>
   <canvas id="webgpu-canvas" width="800" height="400"></canvas>
 
   <script type="module">
@@ -88,39 +88,39 @@
         -0.9, 0.0, 0.0,
       ]);
 
-      // Vertices for dark blue rectangles (strips)
+      // Vertices for smaller dark blue rectangles (strips)
       const rectangleVertices = new Float32Array([
-        // Strip 1
-        -0.8, 0.8, 0.0,
-        -0.8, 0.75, 0.0,
-        0.0, 0.75, 0.0,
-        -0.8, 0.8, 0.0,
-        0.0, 0.75, 0.0,
-        0.0, 0.8, 0.0,
+        // Rectangle 1
+        -0.7, 0.8, 0.0,
+        -0.7, 0.75, 0.0,
+        -0.5, 0.75, 0.0,
+        -0.7, 0.8, 0.0,
+        -0.5, 0.75, 0.0,
+        -0.5, 0.8, 0.0,
 
-        // Strip 2
+        // Rectangle 2
         0.1, 0.5, 0.0,
         0.1, 0.45, 0.0,
-        0.9, 0.45, 0.0,
+        0.3, 0.45, 0.0,
         0.1, 0.5, 0.0,
-        0.9, 0.45, 0.0,
-        0.9, 0.5, 0.0,
+        0.3, 0.45, 0.0,
+        0.3, 0.5, 0.0,
 
-        // Strip 3
-        -0.9, -0.5, 0.0,
-        -0.9, -0.55, 0.0,
-        0.2, -0.55, 0.0,
-        -0.9, -0.5, 0.0,
-        0.2, -0.55, 0.0,
-        0.2, -0.5, 0.0,
+        // Rectangle 3
+        -0.4, -0.5, 0.0,
+        -0.4, -0.55, 0.0,
+        -0.2, -0.55, 0.0,
+        -0.4, -0.5, 0.0,
+        -0.2, -0.55, 0.0,
+        -0.2, -0.5, 0.0,
 
-        // Strip 4
+        // Rectangle 4
         -0.2, -0.2, 0.0,
         -0.2, -0.25, 0.0,
-        0.6, -0.25, 0.0,
+        0.0, -0.25, 0.0,
         -0.2, -0.2, 0.0,
-        0.6, -0.25, 0.0,
-        0.6, -0.2, 0.0,
+        0.0, -0.25, 0.0,
+        0.0, -0.2, 0.0,
       ]);
 
       // Create buffers for triangles and rectangles
