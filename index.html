@@ -45,53 +45,19 @@
         format: canvasFormat,
       });
 
-      // Vertices for the fish (yellow triangles)
+      // Vertices for fish and eyes
       const fishVertices = new Float32Array([
-        // Fish 1 (top-right corner)
-        0.5, 0.3, 0.0,  // Top vertex
-        0.3, 0.2, 0.0,  // Bottom-left vertex
-        0.3, 0.4, 0.0,  // Bottom-right vertex
-
-        // Fish 2 (bottom-left corner)
-        -0.6, -0.5, 0.0,  // Top vertex
-        -0.7, -0.6, 0.0,  // Bottom-left vertex
-        -0.5, -0.6, 0.0,  // Bottom-right vertex
-
-        // Fish 3 (centered)
-        0.0, 0.2, 0.0,  // Top vertex
-        -0.2, 0.0, 0.0,  // Bottom-left vertex
-        0.2, 0.0, 0.0,  // Bottom-right vertex
-
-        // Fish 4 (top-left corner)
-        -0.4, 0.6, 0.0,  // Top vertex
-        -0.5, 0.5, 0.0,  // Bottom-left vertex
-        -0.3, 0.5, 0.0,  // Bottom-right vertex
-
-        // Fish 5 (bottom-right corner)
-        0.6, -0.4, 0.0,  // Top vertex
-        0.5, -0.6, 0.0,  // Bottom-left vertex
-        0.7, -0.6, 0.0,  // Bottom-right vertex
+        0.5, 0.3, 0.0, 0.3, 0.2, 0.0, 0.3, 0.4, 0.0, // Fish 1
+        -0.6, -0.5, 0.0, -0.7, -0.6, 0.0, -0.5, -0.6, 0.0, // Fish 2
+        0.0, 0.2, 0.0, -0.2, 0.0, 0.0, 0.2, 0.0, 0.0, // Fish 3
       ]);
 
-      // Vertices for the eyes (black circles)
       const eyeVertices = new Float32Array([
-        // Eye for Fish 1
-        0.45, 0.35, 0.0,
-
-        // Eye for Fish 2
-        -0.65, -0.55, 0.0,
-
-        // Eye for Fish 3
-        0.05, 0.15, 0.0,
-
-        // Eye for Fish 4
-        -0.45, 0.55, 0.0,
-
-        // Eye for Fish 5
-        0.65, -0.5, 0.0,
+        0.45, 0.35, 0.0, // Eye for Fish 1
+        -0.65, -0.55, 0.0, // Eye for Fish 2
+        0.05, 0.15, 0.0, // Eye for Fish 3
       ]);
 
-      // Create buffers for fish and eyes
       const fishBuffer = device.createBuffer({
         size: fishVertices.byteLength,
         usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
@@ -104,17 +70,15 @@
       });
       device.queue.writeBuffer(eyeBuffer, 0, eyeVertices);
 
-      // Shader modules
       const fishShaderModule = device.createShaderModule({
         code: `
           @vertex
           fn vertexMain(@location(0) position: vec3f) -> @builtin(position) vec4f {
             return vec4f(position, 1.0);
           }
-
           @fragment
           fn fragmentMain() -> @location(0) vec4f {
-            return vec4f(1.0, 1.0, 0.0, 1.0); // Yellow color for the fish
+            return vec4f(1.0, 1.0, 0.0, 1.0); // Yellow color
           }
         `,
       });
@@ -125,15 +89,13 @@
           fn vertexMain(@location(0) position: vec3f) -> @builtin(position) vec4f {
             return vec4f(position, 1.0);
           }
-
           @fragment
           fn fragmentMain() -> @location(0) vec4f {
-            return vec4f(0.0, 0.0, 0.0, 1.0); // Black color for the eyes
+            return vec4f(0.0, 0.0, 0.0, 1.0); // Black color
           }
         `,
       });
 
-      // Render pipelines
       const fishPipeline = device.createRenderPipeline({
         layout: 'auto',
         vertex: {
@@ -141,23 +103,15 @@
           entryPoint: 'vertexMain',
           buffers: [{
             arrayStride: 3 * Float32Array.BYTES_PER_ELEMENT,
-            attributes: [{
-              shaderLocation: 0,
-              offset: 0,
-              format: 'float32x3',
-            }],
+            attributes: [{ shaderLocation: 0, offset: 0, format: 'float32x3' }],
           }],
         },
         fragment: {
           module: fishShaderModule,
           entryPoint: 'fragmentMain',
-          targets: [{
-            format: canvasFormat,
-          }],
+          targets: [{ format: canvasFormat }],
         },
-        primitive: {
-          topology: 'triangle-list',
-        },
+        primitive: { topology: 'triangle-list' },
       });
 
       const eyePipeline = device.createRenderPipeline({
@@ -167,44 +121,32 @@
           entryPoint: 'vertexMain',
           buffers: [{
             arrayStride: 3 * Float32Array.BYTES_PER_ELEMENT,
-            attributes: [{
-              shaderLocation: 0,
-              offset: 0,
-              format: 'float32x3',
-            }],
+            attributes: [{ shaderLocation: 0, offset: 0, format: 'float32x3' }],
           }],
         },
         fragment: {
           module: eyeShaderModule,
           entryPoint: 'fragmentMain',
-          targets: [{
-            format: canvasFormat,
-          }],
+          targets: [{ format: canvasFormat }],
         },
-        primitive: {
-          topology: 'point-list',
-        },
+        primitive: { topology: 'point-list' },
       });
 
-      // Command encoder
       const commandEncoder = device.createCommandEncoder();
 
-      // Render pass
       const passEncoder = commandEncoder.beginRenderPass({
         colorAttachments: [{
           view: context.getCurrentTexture().createView(),
-          clearValue: { r: 0.51, g: 0.83, b: 0.98, a: 1 }, // Light blue background for the ocean
+          clearValue: { r: 0.51, g: 0.83, b: 0.98, a: 1 }, // Ocean color
           loadOp: 'clear',
           storeOp: 'store',
         }],
       });
 
-      // Draw fish
       passEncoder.setPipeline(fishPipeline);
       passEncoder.setVertexBuffer(0, fishBuffer);
       passEncoder.draw(fishVertices.length / 3);
 
-      // Draw eyes
       passEncoder.setPipeline(eyePipeline);
       passEncoder.setVertexBuffer(0, eyeBuffer);
       passEncoder.draw(eyeVertices.length);
