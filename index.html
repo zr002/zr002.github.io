@@ -18,6 +18,7 @@
     canvas {
       display: block;
       margin: 20px auto;
+      background-color: #81d4fa; /* Light blue ocean color */
       border: 2px solid #615F74;
     }
   </style>
@@ -47,30 +48,15 @@
       });
 
       const vertices = new Float32Array([
-        // Fish 1 body and tail
-        0.1, 0.6,  0.0,  // Triangle 1 for body
-        0.0, 0.5,  0.0,
-        0.2, 0.5,  0.0,
+        // Fish body
+        0.2, 0.7,  0.0,  // Top of body
+        0.15, 0.6, 0.0,
+        0.25, 0.6, 0.0,
 
-        0.0, 0.5,  0.0,  // Tail
-        -0.1, 0.45, 0.0,
-        0.0, 0.4,  0.0,
-
-        // Fish 2 body and tail
-        -0.3, -0.1, 0.0,  // Triangle 2 for body
-        -0.4, -0.2, 0.0,
-        -0.2, -0.2, 0.0,
-
-        -0.4, -0.2, 0.0,  // Tail
-        -0.5, -0.25, 0.0,
-        -0.4, -0.3, 0.0,
-
-        // Starfish (Complex Shape)
-        0.0, -0.3, 0.0,
-        0.05, -0.25, 0.0,
-        -0.05, -0.25, 0.0,
-        0.05, -0.35, 0.0,
-        -0.05, -0.35, 0.0,
+        // Fish tail
+        0.15, 0.6, 0.0,
+        0.1, 0.55, 0.0,
+        0.2, 0.6, 0.0,
       ]);
 
       const vertexBuffer = device.createBuffer({
@@ -88,7 +74,7 @@
 
           @fragment
           fn fragmentMain() -> @location(0) vec4f {
-            return vec4f(0.4, 0.8, 0.6, 1.0); // Greenish color for all shapes
+            return vec4f(0.4, 0.8, 0.6, 1.0); // Greenish color for the fish
           }
         `,
       });
@@ -131,7 +117,7 @@
 
       passEncoder.setPipeline(pipeline);
       passEncoder.setVertexBuffer(0, vertexBuffer);
-      passEncoder.draw(vertices.length / 3); // Update draw call for all vertices
+      passEncoder.draw(vertices.length / 3); // Draw the fish
       passEncoder.end();
 
       device.queue.submit([commandEncoder.finish()]);
