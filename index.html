@@ -131,31 +131,32 @@
         -0.95, -0.05, 0.0,
       ]);
       const starVertices = new Float32Array([
-        // Triangle 1 (top)
-        0.0, 0.6, 0.0,  // Top-center
-        0.02, 0.57, 0.0, // Bottom-right
-        -0.02, 0.57, 0.0, // Bottom-left
+        // Triangle 1 (top point)
+        0.0, 0.65, 0.0,  // Tip of the top point
+        0.03, 0.6, 0.0,  // Bottom-right of the top point
+        -0.03, 0.6, 0.0, // Bottom-left of the top point
       
-        // Triangle 2 (bottom-right)
-        0.02, 0.57, 0.0, // Top-center
-        0.03, 0.55, 0.0, // Bottom-right
-        0.0, 0.55, 0.0,  // Bottom-left
+        // Triangle 2 (top-right point)
+        0.03, 0.6, 0.0,  // Left of the point
+        0.05, 0.55, 0.0, // Tip of the top-right point
+        0.0, 0.55, 0.0,  // Right of the point
       
-        // Triangle 3 (bottom-left)
-        -0.02, 0.57, 0.0, // Top-center
-        -0.03, 0.55, 0.0, // Bottom-left
-        0.0, 0.55, 0.0,   // Bottom-right
+        // Triangle 3 (bottom-right point)
+        0.05, 0.55, 0.0, // Top-left of the point
+        0.03, 0.5, 0.0,  // Tip of the bottom-right point
+        0.0, 0.55, 0.0,  // Top-right of the point
       
-        // Triangle 4 (right)
-        0.02, 0.57, 0.0,  // Top-left
-        0.03, 0.6, 0.0,   // Top-right
-        0.03, 0.55, 0.0,  // Bottom-right
+        // Triangle 4 (bottom-left point)
+        0.0, 0.55, 0.0,  // Top-right of the point
+        -0.03, 0.5, 0.0, // Tip of the bottom-left point
+        -0.05, 0.55, 0.0, // Top-left of the point
       
-        // Triangle 5 (left)
-        -0.02, 0.57, 0.0, // Top-right
-        -0.03, 0.6, 0.0,  // Top-left
-        -0.03, 0.55, 0.0, // Bottom-left
+        // Triangle 5 (top-left point)
+        -0.05, 0.55, 0.0, // Bottom-right of the point
+        -0.03, 0.6, 0.0,  // Tip of the top-left point
+        0.0, 0.55, 0.0,   // Bottom-left of the point
       ]);
+
 
 
       // Vertices for smaller dark blue rectangles (strips)
