@@ -23,7 +23,7 @@
 </head>
 <body>
   <h1>Welcome to My Arcane Portal!</h1>
-  <h2>Static Shape Rendering: Fishes with Tails and Starfishes</h2>
+  <h2>Static Shape Rendering: Fishes with Tails and One Starfish</h2>
   <canvas id="webgpu-canvas" width="800" height="400"></canvas>
 
   <script type="module">
@@ -131,14 +131,22 @@
         -0.95, -0.05, 0.0,
       ]);
 
-      // Vertices for orange stars (starfish)
+      // Vertices for one proper orange star (starfish)
       const starVertices = new Float32Array([
-        // Star 1
+        // Center point of the star
         0.0, 0.6, 0.0,
-        0.02, 0.62, 0.0,
-        0.04, 0.6, 0.0,
-        0.02, 0.58, 0.0,
-        0.0, 0.6, 0.0,
+        // Outer and inner points of the star
+        0.02, 0.66, 0.0,  // Outer top right
+        0.01, 0.62, 0.0,  // Inner right
+        0.04, 0.6, 0.0,   // Outer right
+        0.01, 0.58, 0.0,  // Inner bottom right
+        0.02, 0.54, 0.0,  // Outer bottom
+        0.0, 0.56, 0.0,   // Inner bottom
+        -0.02, 0.54, 0.0, // Outer bottom left
+        -0.01, 0.58, 0.0, // Inner bottom left
+        -0.04, 0.6, 0.0,  // Outer left
+        -0.01, 0.62, 0.0, // Inner top left
+        -0.02, 0.66, 0.0, // Outer top
       ]);
 
       // Vertices for smaller dark blue rectangles (strips)
@@ -216,7 +224,7 @@
         `,
       });
 
-      // Shader for orange stars (starfish)
+      // Shader for orange starfish
       const starShaderModule = device.createShaderModule({
         code: `
           @vertex
@@ -321,7 +329,7 @@
           }],
         },
         primitive: {
-          topology: 'triangle-list',
+          topology: 'triangle-fan',
         },
       });
 
@@ -350,7 +358,7 @@
       passEncoder.setVertexBuffer(0, rectangleBuffer);
       passEncoder.draw(rectangleVertices.length / 3);
 
-      // Draw orange stars
+      // Draw one orange starfish
       passEncoder.setPipeline(starPipeline);
       passEncoder.setVertexBuffer(0, starBuffer);
       passEncoder.draw(starVertices.length / 3);
