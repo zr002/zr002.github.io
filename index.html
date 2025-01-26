@@ -130,27 +130,19 @@
         -0.95, -0.15, 0.0,
         -0.95, -0.05, 0.0,
       ]);
-
-      // Vertices for one proper orange star (starfish)
       const starVertices = new Float32Array([
-        // Outer and inner points of the star (Five-pointed)
         0.0, 0.6, 0.0,  // Center
         0.05, 0.65, 0.0, // Outer point 1
         0.02, 0.62, 0.0, // Inner point 1
-
         0.07, 0.6, 0.0,  // Outer point 2
         0.02, 0.58, 0.0, // Inner point 2
-
         0.05, 0.55, 0.0, // Outer point 3
         0.0, 0.57, 0.0,  // Inner point 3
-
         -0.05, 0.55, 0.0, // Outer point 4
         -0.02, 0.58, 0.0, // Inner point 4
-
         -0.07, 0.6, 0.0,  // Outer point 5
         -0.02, 0.62, 0.0, // Inner point 5
-
-        -0.05, 0.65, 0.0, // Back to Outer point 1
+        0.05, 0.65, 0.0,  // Close the loop to Outer point 1
       ]);
 
       // Vertices for smaller dark blue rectangles (strips)
