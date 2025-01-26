@@ -23,7 +23,7 @@
 </head>
 <body>
   <h1>Welcome to My Arcane Portal!</h1>
-  <h2>Static Shape Rendering: Triangle Fishes with Square Eyes</h2>
+  <h2>Static Shape Rendering: Triangle Fishes with Rectangles in the Ocean</h2>
   <canvas id="webgpu-canvas" width="800" height="400"></canvas>
 
   <script type="module">
@@ -73,61 +73,45 @@
         -0.65, -0.38, 0.0,
       ]);
 
-      // Vertices for square eyes of the fishes
-      const squareVertices = new Float32Array([
-        // Eye for fish 1
-        -0.52, 0.48, 0.0,
-        -0.54, 0.48, 0.0,
-        -0.54, 0.50, 0.0,
-        -0.52, 0.48, 0.0,
-        -0.54, 0.50, 0.0,
-        -0.52, 0.50, 0.0,
+      // Vertices for dark blue rectangles
+      const rectangleVertices = new Float32Array([
+        // Rectangle 1
+        -0.7, 0.6, 0.0,
+        -0.7, 0.55, 0.0,
+        -0.2, 0.55, 0.0,
+        -0.7, 0.6, 0.0,
+        -0.2, 0.55, 0.0,
+        -0.2, 0.6, 0.0,
 
-        // Eye for fish 2
-        0.32, -0.22, 0.0,
-        0.34, -0.22, 0.0,
-        0.34, -0.20, 0.0,
-        0.32, -0.22, 0.0,
-        0.34, -0.20, 0.0,
-        0.32, -0.20, 0.0,
+        // Rectangle 2
+        0.1, -0.1, 0.0,
+        0.1, -0.15, 0.0,
+        0.5, -0.15, 0.0,
+        0.1, -0.1, 0.0,
+        0.5, -0.15, 0.0,
+        0.5, -0.1, 0.0,
 
-        // Eye for fish 3
-        -0.25, -0.02, 0.0,
-        -0.3, -0.02, 0.0,
-        -0.3, 0.03, 0.0,
-        -0.25, -0.02, 0.0,
-        -0.3, 0.03, 0.0,
-        -0.25, 0.03, 0.0,
-
-        // Eye for fish 4
-        0.37, 0.31, 0.0,
-        0.39, 0.31, 0.0,
-        0.39, 0.33, 0.0,
-        0.37, 0.31, 0.0,
-        0.39, 0.33, 0.0,
-        0.37, 0.33, 0.0,
-
-        // Eye for fish 5
-        -0.62, -0.39, 0.0,
-        -0.63, -0.39, 0.0,
-        -0.63, -0.38, 0.0,
-        -0.62, -0.39, 0.0,
-        -0.63, -0.38, 0.0,
-        -0.62, -0.38, 0.0,
+        // Rectangle 3
+        -0.4, -0.6, 0.0,
+        -0.4, -0.65, 0.0,
+        0.0, -0.65, 0.0,
+        -0.4, -0.6, 0.0,
+        0.0, -0.65, 0.0,
+        0.0, -0.6, 0.0,
       ]);
 
-      // Create buffers for triangles and squares
+      // Create buffers for triangles and rectangles
       const triangleBuffer = device.createBuffer({
         size: triangleVertices.byteLength,
         usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
       });
       device.queue.writeBuffer(triangleBuffer, 0, triangleVertices);
 
-      const squareBuffer = device.createBuffer({
-        size: squareVertices.byteLength,
+      const rectangleBuffer = device.createBuffer({
+        size: rectangleVertices.byteLength,
         usage: GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST,
       });
-      device.queue.writeBuffer(squareBuffer, 0, squareVertices);
+      device.queue.writeBuffer(rectangleBuffer, 0, rectangleVertices);
 
       // Shader for yellow triangles (fishes)
       const triangleShaderModule = device.createShaderModule({
@@ -144,8 +128,8 @@
         `,
       });
 
-      // Shader for black squares (eyes)
-      const squareShaderModule = device.createShaderModule({
+      // Shader for dark blue rectangles
+      const rectangleShaderModule = device.createShaderModule({
         code: `
           @vertex
           fn vertexMain(@location(0) position: vec3f) -> @builtin(position) vec4f {
@@ -154,12 +138,12 @@
 
           @fragment
           fn fragmentMain() -> @location(0) vec4f {
-            return vec4f(0.0, 0.0, 0.0, 1.0); // Black color for squares
+            return vec4f(0.0, 0.0, 0.5, 1.0); // Dark blue color for rectangles
           }
         `,
       });
 
-      // Pipelines for triangles and squares
+      // Pipelines for triangles and rectangles
       const trianglePipeline = device.createRenderPipeline({
         layout: 'auto',
         vertex: {
@@ -186,10 +170,10 @@
         },
       });
 
-      const squarePipeline = device.createRenderPipeline({
+      const rectanglePipeline = device.createRenderPipeline({
         layout: 'auto',
         vertex: {
-          module: squareShaderModule,
+          module: rectangleShaderModule,
           entryPoint: 'vertexMain',
           buffers: [{
             arrayStride: 3 * Float32Array.BYTES_PER_ELEMENT,
@@ -201,7 +185,7 @@
           }],
         },
         fragment: {
-          module: squareShaderModule,
+          module: rectangleShaderModule,
           entryPoint: 'fragmentMain',
           targets: [{
             format: canvasFormat,
@@ -228,10 +212,10 @@
       passEncoder.setVertexBuffer(0, triangleBuffer);
       passEncoder.draw(triangleVertices.length / 3);
 
-      // Draw square eyes
-      passEncoder.setPipeline(squarePipeline);
-      passEncoder.setVertexBuffer(0, squareBuffer);
-      passEncoder.draw(squareVertices.length / 3);
+      // Draw dark blue rectangles
+      passEncoder.setPipeline(rectanglePipeline);
+      passEncoder.setVertexBuffer(0, rectangleBuffer);
+      passEncoder.draw(rectangleVertices.length / 3);
 
       passEncoder.end();
 
