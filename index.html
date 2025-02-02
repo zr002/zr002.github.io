@@ -1,15 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Aiden's Arcane Portal</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>SP 25 Apprentice Aiden Ren's Arcane Portal</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #b2dfc9; /* Restored background */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    h1 {
+      color: #2f3243;
+      font-size: 36px; /* Make header larger */
+    }
+    h2 {
+      color: #615F74;
+      font-size: 24px; /* Slightly smaller than title */
+    }
+    .button-container {
+      margin-top: 20px;
+    }
+    .quest-button {
+      font-size: 18px;
+      padding: 12px 24px;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      background-color: #4CAF50; /* Green background */
+      color: white;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+    .quest-button:hover {
+      background-color: #45a049; /* Darker green on hover */
+    }
+  </style>
 </head>
 <body>
   <h1>Welcome to My Arcane Portal!</h1>
   <h2>Select a Quest:</h2>
-  
-  <button onclick="window.location.href='quest1.html'">Quest 1: Fish Scene</button>
-  <button onclick="window.location.href='quest2.html'">Quest 2: Solar System</button>
-
+  <div class="button-container">
+    <button class="quest-button" onclick="location.href='quest1.html'">Quest 1: Fish Scene</button>
+    <button class="quest-button" onclick="location.href='quest2.html'">Quest 2: Solar System</button>
+  </div>
 </body>
 </html>
