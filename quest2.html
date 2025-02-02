@@ -1,41 +1,90 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Quest 2: Solar System</title>
+  <title>HW2: Solar System Animation</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-color: #b2dfc9; /* Matching background */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    body { 
+      margin: 0; 
+      background-color: black; 
+      text-align: center; 
+      overflow: hidden;
     }
-    h1 {
-      color: #2f3243;
-      font-size: 32px;
-      margin-top: 20px;
+    canvas { 
+      display: block; 
+      margin: auto; 
+      position: absolute;
     }
-    .back-button {
-      margin-top: 20px;
-      font-size: 16px;
+
+    /* Return Button */
+    #return-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
       padding: 10px 20px;
-      background-color: #007BFF;
-      color: white;
+      background-color: rgba(255, 255, 255, 0.8);
+      color: black;
+      font-size: 16px;
+      font-weight: bold;
       border: none;
+      border-radius: 5px;
       cursor: pointer;
-      border-radius: 6px;
-      transition: 0.3s;
+      z-index: 10; /* Ensures it stays above everything */
     }
-    .back-button:hover {
-      background-color: #0056b3;
+
+    #return-button:hover {
+      background-color: rgba(200, 200, 200, 0.9);
+    }
+
+    /* WebGPU background canvas */
+    #webgpu-canvas {
+      width: 100vw;  
+      height: 100vh; 
+      z-index: 0;
+    }
+
+    /* 2D Canvas for Orbits */
+    #orbit-canvas {
+      width: 100vw;
+      height: 100vh;
+      position: absolute;  
+      top: 0;
+      left: 0;
+      pointer-events: none; 
+      z-index: 1;
+    }
+
+    /* 2D Canvas for Planets */
+    #planets-canvas {
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* 2D Canvas for the Sun */
+    #sun-canvas {
+      width: 100px; 
+      height: 100px;
+      position: absolute;  
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: transparent;
+      z-index: 3;
     }
   </style>
 </head>
 <body>
-  <h1>Quest 2: Solar System</h1>
-  <p>(Solar system scene will be added here.)</p>
-  <button class="back-button" onclick="location.href='index.html'">Back to Portal</button>
+  <button id="return-button" onclick="location.href='index.html'">Return to Home</button>
+
+  <canvas id="webgpu-canvas"></canvas>  
+  <canvas id="orbit-canvas"></canvas>   
+  <canvas id="planets-canvas"></canvas> 
+  <canvas id="sun-canvas" width="250" height="250"></canvas>  
+
+  <script type="module" src="main.js"></script>
 </body>
 </html>
