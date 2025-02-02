@@ -2,11 +2,45 @@
 <html>
 <head>
   <title>Quest 1: Fish Scene</title>
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #b2dfc9; /* Restored background */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      color: #2f3243;
+      font-size: 32px;
+      margin-top: 20px;
+    }
+    canvas {
+      display: block;
+      margin: 20px auto;
+    }
+    .back-button {
+      margin-top: 20px;
+      font-size: 16px;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+    .back-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
   <h1>Quest 1: Fish Scene</h1>
   <canvas id="webgpu-canvas" width="800" height="400"></canvas>
+  <button class="back-button" onclick="location.href='index.html'">Back to Portal</button>
   <script type="module" src="fish-scene.js"></script>
 </body>
 </html>
