@@ -2,10 +2,40 @@
 <html>
 <head>
   <title>Quest 2: Solar System</title>
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #b2dfc9; /* Matching background */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      color: #2f3243;
+      font-size: 32px;
+      margin-top: 20px;
+    }
+    .back-button {
+      margin-top: 20px;
+      font-size: 16px;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: 0.3s;
+    }
+    .back-button:hover {
+      background-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
   <h1>Quest 2: Solar System</h1>
-  <p>The Solar System scene will be added here.</p>
+  <p>(Solar system scene will be added here.)</p>
+  <button class="back-button" onclick="location.href='index.html'">Back to Portal</button>
 </body>
 </html>
