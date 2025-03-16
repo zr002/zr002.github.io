@@ -37,7 +37,10 @@ export default class StandardTextObject {
     this._textCanvas.style.border = '1px solid red';
     document.body.appendChild(this._textCanvas);
   }
-  
+  async init() {
+    // No asynchronous initialization is required.
+    return;
+  }
   toggleVisibility() {
     this._textCanvas.hidden = !this._textCanvas.hidden;
   }
@@ -84,4 +87,15 @@ export default class StandardTextObject {
       this._textContext.fillText(line, x, y);
     });
   }
+  updateGeometry() {
+    // No geometry update needed for text objects.
+  }
+  render(pass) {
+    // No WebGPU rendering needed for text objects.
+    // The text is rendered via the DOM (canvas 2D context).
+    return;
+  }
+  compute(pass) {}
+  
+  
 }
