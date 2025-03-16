@@ -6,7 +6,7 @@
  * (License text unchanged)
  */
 
-import SceneObject from "./lib/DSViz/SceneObject.js";
+import SceneObject from "/lib/DSViz/SceneObject.js";
 import Polygon from "./lib/DS/Polygon.js";
 
 export default class PolygonObject extends SceneObject {
