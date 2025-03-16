@@ -52,7 +52,7 @@ export default class LineStrip2DVertexObject extends SceneObject {
   }
   
   async createShaders() {
-    let shaderCode = await this.loadShader("/shaders/standard2d.wgsl");
+    let shaderCode = await this.loadShader("/Quest5/shaders/standard2d.wgsl");
     this._shaderModule = this._device.createShaderModule({
       label: " Shader " + this.getName(),
       code: shaderCode,
