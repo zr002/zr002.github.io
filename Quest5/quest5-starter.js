@@ -77,7 +77,7 @@ async function init() {
       cellTypes[r * gridSize + c] = (type === TwoDGridSegmented.INTERIOR) ? 1 : 0;
     }
   }
-  const gridDataBuffer = renderer._device.createBuffer({
+  gridDataBuffer = renderer._device.createBuffer({
     size: cellTypes.byteLength,
     usage: GPUBufferUsage.STORAGE | GPUBufferUsage.COPY_DST,
     mappedAtCreation: true,
