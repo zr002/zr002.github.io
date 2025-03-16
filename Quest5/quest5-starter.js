@@ -21,9 +21,9 @@
  *                                anything the license permits.
  */
 
-import Renderer from '/lib/Viz/2DRenderer.js';
-import PolygonObject from '/lib/DSViz/PolygonObject.js';
-import StandardTextObject from '/lib/DSViz/StandardTextObject.js';
+import Renderer from './lib/Viz/2DRenderer.js';
+import PolygonObject from './lib/DSViz/PolygonObject.js';
+import StandardTextObject from './lib/DSViz/StandardTextObject.js';
 import TwoDGridSegmented from './lib/DS/TwoDGridSegmented.js';
 import { gpuGridQuery } from './gpuGridQuery.js';
 
