@@ -2,7 +2,7 @@
  * Copyright ...
  * (License text omitted)
  */
-
+   
 import Light from "/Quest8/lib/Viz/Light.js"
  
 export default class DirectionalLight extends Light {
