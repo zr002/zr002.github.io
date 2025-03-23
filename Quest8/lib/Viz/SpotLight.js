@@ -3,7 +3,7 @@
  * (License text omitted)
  */
 
-import Light from "/lib/Viz/Light.js"
+import Light from "/Quest8/lib/Viz/Light.js"
  
 export default class SpotLight extends Light {
   constructor(
