@@ -21,7 +21,7 @@
  *                                anything the license permits.
  */
 
-import SceneObject from "/lib/DSViz/SceneObject.js"
+import SceneObject from "/Quest8/lib/DSViz/SceneObject.js"
 
 export default class RayTracingObject extends SceneObject {
   async createGeometry() {}
