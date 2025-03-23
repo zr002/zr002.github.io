@@ -3,13 +3,13 @@
  * (License text omitted)
  */
 
-import RayTracer from '/lib/Viz/RayTracer.js'
-import StandardTextObject from '/lib/DSViz/StandardTextObject.js'
-import RayTracingBoxLightObject from '/lib/DSViz/RayTracingBoxLightObject.js'
-import Camera from '/lib/Viz/3DCamera.js'
-import PointLight from '/lib/Viz/PointLight.js'
-import DirectionalLight from '/lib/Viz/DirectionalLight.js'
-import SpotLight from '/lib/Viz/SpotLight.js'
+import RayTracer from '/Quest8/lib/Viz/RayTracer.js'
+import StandardTextObject from '/Quest8/lib/DSViz/StandardTextObject.js'
+import RayTracingBoxLightObject from '/Quest8/lib/DSViz/RayTracingBoxLightObject.js'
+import Camera from '/Quest8/lib/Viz/3DCamera.js'
+import PointLight from '/Quest8/lib/Viz/PointLight.js'
+import DirectionalLight from '/Quest8/lib/Viz/DirectionalLight.js'
+import SpotLight from '/Quest8/lib/Viz/SpotLight.js'
 
 async function init() {
   // 1) Create a <canvas> for rendering
