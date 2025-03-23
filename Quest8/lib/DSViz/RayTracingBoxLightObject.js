@@ -3,8 +3,8 @@
  * (License text omitted for brevity)
  */
 
-import RayTracingObject from "/lib/DSViz/RayTracingObject.js"
-import UnitCube from "/lib/DS/UnitCube.js"
+import RayTracingObject from "/Quest8/lib/DSViz/RayTracingObject.js"
+import UnitCube from "/Quest8/lib/DS/UnitCube.js"
 
 export default class RayTracingBoxLightObject extends RayTracingObject {
   constructor(device, canvasFormat, camera, showTexture = true) {
