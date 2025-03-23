@@ -155,7 +155,7 @@ export default class RayTracingBoxLightObject extends RayTracingObject {
   }
 
   async createShaders() {
-    let shaderCode = await this.loadShader("/shaders/traceboxlight.wgsl");
+    let shaderCode = await this.loadShader("/Quest8/shaders/traceboxlight.wgsl");
     this._shaderModule = this._device.createShaderModule({
       label: " Shader " + this.getName(),
       code: shaderCode,
