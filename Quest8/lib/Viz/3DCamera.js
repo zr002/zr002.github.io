@@ -1,4 +1,4 @@
-import PGA3D from '/lib/Math/PGA3D.js'
+import PGA3D from '/Quest8/lib/Math/PGA3D.js'
 
 export default class Camera {
   constructor(width, height) {
