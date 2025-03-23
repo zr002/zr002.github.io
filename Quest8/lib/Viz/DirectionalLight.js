@@ -3,7 +3,7 @@
  * (License text omitted)
  */
 
-import Light from "/lib/Viz/Light.js"
+import Light from "/Quest8/lib/Viz/Light.js"
  
 export default class DirectionalLight extends Light {
   constructor(intensity = [1, 1, 1], direction = [Math.sqrt(3), Math.sqrt(3), Math.sqrt(3)]) {
