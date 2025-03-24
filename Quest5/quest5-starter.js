@@ -44,6 +44,8 @@ async function init() {
   const renderer = new Renderer(canvasTag);
   await renderer.init();
 
+  let gridDataBuffer;
+
   // Array of available shape files.
   const shapeFiles = [
     '/assets/box.polygon',
