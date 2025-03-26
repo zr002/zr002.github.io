@@ -134,10 +134,8 @@ FPS: ${currentFPS}`
         queryY: py,
       };
       const isInside = await gpuGridQuery(renderer._device, gridDataBuffer, gridParams);
-      console.log("GPU grid query:", isInside);
     } else {
       const isInside = !grid.isOutsideAssumeLocalConvex([px, py]);
-      console.log("CPU grid query:", isInside);
     }
   });
 
