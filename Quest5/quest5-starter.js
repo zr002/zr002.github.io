@@ -119,8 +119,8 @@ FPS: ${currentFPS}`
     // Convert mouse position to grid coordinate system.
     const canvasWidth = canvasTag.width;
     const canvasHeight = canvasTag.height;
-    const px = (mousePos.x / canvasWidth) * 2.0 - 1.0;
-    const py = 1.0 - (mousePos.y / canvasHeight) * 2.0;
+    const px = (mousePos.x / canvasTag.clientWidth) * 2 - 1;
+    const py = 1 - (mousePos.y / canvasTag.clientHeight) * 2;
     console.log("x position:",px);
     console.log("y position:",py);
     // Use either the GPU or CPU grid for collision query.
