@@ -206,11 +206,31 @@ export default class TwoDGridSegmented {
     }
   }
   
-  // an implementation of the winding number to check if a point is inside a polygon or not
+  isLeft(v0, v1, p) {
+    return (v1[0] - v0[0]) * (p[1] - v0[1]) - (p[0] - v0[0]) * (v1[1] - v0[1]);
+  }
+
   isInsideWindingNumber(p) {
-    // TODO: Put you Winding Number implementation here
-    
-    return false;
+    let wn = 0; // winding number counter
+    // Loop through all edges of the polygon.
+    // Note: This._polygon is our deep-copied vertex array.
+    for (let i = 0; i < this._polygon.length - 1; i++) {
+      const v0 = this._polygon[i];
+      const v1 = this._polygon[i + 1];
+      // Check if edge crosses upward.
+      if (v0[1] <= p[1]) {
+        if (v1[1] > p[1] && this.isLeft(v0, v1, p) > 0) {
+          wn++;  // a valid upward crossing.
+        }
+      } else {
+        // v0[1] > p[1]
+        if (v1[1] <= p[1] && this.isLeft(v0, v1, p) < 0) {
+          wn--;  // a valid downward crossing.
+        }
+      }
+    }
+    // A nonzero winding number means p is inside.
+    return wn !== 0;
   }
   
   isInside(segments, p) {
