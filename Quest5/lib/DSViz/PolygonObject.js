@@ -312,8 +312,8 @@ updatePBD() {
     const canvasHeight = canvas.height;
     
     // Convert mouse coordinates to normalized device coordinates.
-    const px = (this._mouseX / canvasTag.clientWidth) * 2 - 1;
-    const py = 1 - (this._mouseY / canvasTag.clientHeight) * 2;
+    const px = (this._mouseX / canvas.clientWidth) * 2 - 1;
+    const py = 1 - (this._mouseY / canvas.clientHeight) * 2;
     
     // Determine collision using the appropriate method.
     let inside = false;
