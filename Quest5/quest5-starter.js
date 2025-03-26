@@ -2,7 +2,7 @@
  * Copyright (c) 2025 SingChun LEE @ Bucknell University. CC BY-NC 4.0.
  * 
  * This code is provided mainly for educational purposes at Bucknell University.
- *
+ * 
  * This code is licensed under the Creative Commons Attribution-NonCommerical 4.0
  * International License. To view a copy of the license, visit 
  *   https://creativecommons.org/licenses/by-nc/4.0/
