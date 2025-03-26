@@ -17,7 +17,7 @@
  *                 and indicate if changes were made.
  *  - NonCommerical: You may not use the material for commerical purposes.
  *  - No additional restrictions: You may not apply legal terms or technological 
- *                                measures that legally restrict others from doing
+ *                                measures that legally restrict others from doing  
  *                                anything the license permits.
  */
 
