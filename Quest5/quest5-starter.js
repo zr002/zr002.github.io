@@ -121,6 +121,8 @@ FPS: ${currentFPS}`
     const canvasHeight = canvasTag.height;
     const px = (mousePos.x / canvasWidth) * 4.0 - 1.0;
     const py = 1.0 - (mousePos.y / canvasHeight) * 4.0;
+    console.log("x position":px);
+    console.log("y position":py);
     // Use either the GPU or CPU grid for collision query.
     if (useGPU) {
       // Set up grid parameters for the GPU query.
