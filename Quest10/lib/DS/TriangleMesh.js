@@ -20,7 +20,7 @@
  *                                measures that legally restrict others from doing
  *                                anything the license permits.
  */
- 
+  
 import PlyIO from "/Quest10/lib/IO/PlyIO.js"
 
 export default class TriangleMesh {
