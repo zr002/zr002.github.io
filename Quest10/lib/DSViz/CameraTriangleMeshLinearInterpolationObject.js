@@ -21,8 +21,8 @@
  *                                anything the license permits.
  */
 
-import SceneObject from "/lib/DSViz/SceneObject.js"
-import TriangleMesh from "/lib/DS/TriangleMesh.js"
+import SceneObject from "/Quest10/lib/DSViz/SceneObject.js"
+import TriangleMesh from "/Quest10/lib/DS/TriangleMesh.js"
 
 export default class CameraTriangleMeshLinearInterpolationObject extends SceneObject {
   constructor(device, canvasFormat, srcfile, tgtfile, camera) {
